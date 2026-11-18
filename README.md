@@ -1,2 +1,1 @@
-# netizen.github.io
-Grok with Tesla
+Capelli household — private Tesla app key host. Nothing to see here.
