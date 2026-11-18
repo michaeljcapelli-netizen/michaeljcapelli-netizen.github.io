@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Tesla callback</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; line-height: 1.4; }
+    #box {
+      display: block;
+      width: 100%;
+      max-width: 40rem;
+      min-height: 6rem;
+      box-sizing: border-box;
+      font-family: ui-monospace, monospace;
+    }
+    button { margin-top: 0.75rem; }
+  </style>
+</head>
+<body>
+  <p>Copy this code back to Chief to finish linking your Teslas.</p>
+  <textarea id="box" readonly rows="4"></textarea>
+  <div><button type="button" id="copy">Copy</button></div>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var code = params.get("code");
+      var state = params.get("state");
+      var box = document.getElementById("box");
+      box.value = "code: " + (code === null ? "" : code) + "\nstate: " + (state === null ? "" : state);
+
+      function fallback() {
+        box.focus();
+        box.select();
+        document.execCommand("copy");
+      }
+
+      document.getElementById("copy").addEventListener("click", function () {
+        var text = box.value;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).catch(fallback);
+        } else {
+          fallback();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
